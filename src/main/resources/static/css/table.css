@@ -1,0 +1,30 @@
+/*:root {
+	--colorVerde: #00a160;
+	--colorRojo: #ee3124;
+	--colorAmarillo: #ffc425;
+	--colorOscuro: #383838;
+}*/
+
+.table {
+	border-collapse: collapse;
+	margin: 20px auto;
+}
+
+.table__head {
+	font-size: 20px;
+	color: white;
+	background-color: #383838;
+}
+
+.table tr {
+	transition: all 0.3s;	
+}
+
+.table tr:hover {
+	background-color: #bbdcbe;
+}
+
+.table td, .table th {
+	border: 3px #383838 solid;
+	padding: 5px;
+}

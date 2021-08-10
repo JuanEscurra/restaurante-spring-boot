@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head">
+</head>
+<body>
+	<div class="container">
+	
+		<header th:replace="layout/header :: header"></header>
+		
+		<nav th:replace="layout/navbar :: nav"></nav>
+		
+		<main class="main">
+			<h3 class="section-title">Registrar usuario</h3>
+			<form th:action="@{/user/registrar}" method="post" th:object="${user}" class="form">
+				<input type="hidden" id="id"  th:field="*{id}" />
+				<div class="form__field">
+					<label for="name" class="form__label">Nombre:</label>
+					<input type="text" id="name"  th:field="*{name}" class="form__input" th:errorclass="error" />
+					<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="form__error"></div>
+				</div>
+				<div class="form__field">
+					<label for="lastName" class="form__label">Apellido:</label>
+					<input type="text" id="name"  th:field="*{lastName}" class="form__input" th:errorclass="error" />
+					<div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="form__error"></div>
+				</div>
+				<div class="form__field">
+					<label for="email" class="form__label">Email:</label>
+					<input type="email" id="email"  th:field="*{email}" class="form__input" th:errorclass="error" />
+					<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="form__error"></div>
+				</div>
+				<div class="form__field">
+					<label for="password" class="form__label">Password:</label>
+					<input type="password" id="password"  th:field="*{password}" class="form__input" th:errorclass="error" />
+					<div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="form__error"></div>
+				</div>
+				<div class="form__field">
+					<label for="rol" class="form__label">rol:</label>
+					<select th:field="*{role.id}" id="rol" class="form__input">
+						<option value="">--Selecionar--</option>
+						<option th:each="rol: ${roles}" th:value="${rol.id}" th:text="${rol.name}"></option>
+					</select>
+					<div th:if="${#fields.hasErrors('role.id')}" th:errors="*{role.id}" class="form__error"></div>
+				</div>
+				<div class="form__field">
+					<label for="dni" class="form__label">Dni:</label>
+					<input type="text" id="dni"  th:field="*{dni}" class="form__input" th:errorclass="error" />
+					<div th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}" class="form__error"></div>
+				</div>
+				<div class="btn__double">
+					<a href="/user/" class="btn btn--cancel">Cancelar</a>
+					<button type="submit" class="btn btn--add">Registrar</button>
+				</div>
+			</form>
+		</main>
+		
+		<footer th:replace="layout/layout :: footer"></footer>
+		
+	</div>
+	
+	<div th:replace="layout/layout :: scripts"></div>
+	
+</body>
+</html>

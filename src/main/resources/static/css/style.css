@@ -1,0 +1,162 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap');
+
+@import url("./header.css");
+@import url("./nav.css");
+@import url("./table.css");
+@import url("./form.css");
+
+:root {
+	--colorVerde: #00a160;
+	--colorRojo: #ee3124;
+	--colorAmarillo: #ffc425;
+	--colorOscuro: #383838;
+}
+
+body {
+	margin: 0;
+	font-family: 'Roboto Condensed', sans-serif;
+}
+
+.container {
+	height: 100vh;
+	display:  grid;
+	grid-template-columns: 20% 80%;
+	grid-template-rows: 75px auto auto;
+}
+
+.main {
+	grid-column: 2/3;
+	grid-row: 2/3;
+	padding: 40px;
+	position: relative;
+}
+
+.footer {
+	grid-column: 2/3;
+	grid-row: 3/4;
+}
+
+
+.btn {
+	text-decoration: none;
+	color: white;
+	font-size: 16px;
+	display: inline-block;
+	margin: 10px;
+	padding: 15px;
+	border: none;
+	border-radius: 10px;
+	transition: all 0.2s;
+	cursor: pointer;
+}
+
+.btn:hover {
+	transform: scale(1.05);
+}
+
+.btn i {
+	margin-right: 10px;
+}
+
+.btn--add {
+	background-color: #28a745;
+}
+
+.btn--update {
+	background-color: #345493;
+}
+
+.btn--delete {
+	background-color: #843d3d;
+}
+
+.btn--cancel {
+	background-color: #898989;
+}
+
+.flex {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.section-title {
+	font-size: 24px;
+	text-align: center;
+}
+
+#btn-modal {
+	display: none;
+}
+
+
+#modal--user {
+	
+}
+
+#btn-modal:checked ~ .modal  {
+	visibility: visible;
+	opacity: 1;
+	transition: all 0.5s;
+}
+
+.modal {
+	min-width: 350px;
+	min-height: 450px;
+	padding: 15px 35px;
+	border-radius: 15px;
+	background: rgba(209,209,209,0.97);
+	opacity: 0;
+	visibility: hidden;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.modal__shutdown {
+	position: absolute;
+	top: 15px;
+	right: 10px;
+	cursor: pointer;
+}
+
+.modal__header {
+	border-bottom: 3px solid #383838;
+	margin: 15px;
+}
+
+.modal__body {
+	
+}
+
+.btn__double {
+	width: 80%;
+	margin: 15px auto;
+	display: flex;
+	justify-content: center;
+}
+
+.btn__double .btn:nth-child(1) {
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+	margin-right: 0;
+}
+
+.btn__double .btn:nth-child(2) {
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+	margin-left: 0;
+}
+
+.content {
+	display: flex;
+	justify-content: space-around;
+}
+
+
+
+
+
+
+

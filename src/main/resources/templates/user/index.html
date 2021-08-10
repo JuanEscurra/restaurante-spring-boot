@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head">
+</head>
+<body>
+
+	<div class="container">
+	
+		<header th:replace="layout/header :: header"></header>
+	
+		<nav th:replace="layout/navbar :: nav"></nav>
+		
+		<main class="main">
+			<h3 class="section-title">Lista de usuarios</h3>
+			<div class="flex">
+				<a th:href="@{/user/form}" class="btn btn--add">
+					<i class="fas fa-plus"></i>Registrar usuario
+				</a>
+				<form th:action="@{/user/buscar}">
+					<input type="text" name="lastName" placeholder="Ingrese el apellido"/>
+					<button type="submit">Buscar</button>
+				</form>
+			</div>
+			<table class="table">
+				<thead class="table__head">
+					<tr>
+						<th>Foto</th>
+						<th>Nombre Completo</th>
+						<th>Email</th>
+						<th>Rol</th>
+						<th>Acciones</th>
+					</tr>
+				</thead>
+				<tbody class="table__body">
+					<tr th:each="user: ${users}">
+						<td>Foto</td>
+						<td th:text="${user.name +' ' + user.lastName}"></td>
+						<td th:text="${user.email}"></td>
+						<td th:text="${user.role.name}"></td>
+						<td>
+							<a th:href="@{/user/form/} + ${user.id}" class="btn btn--update">
+								<i class="fas fa-edit"></i><span>Editar</span>
+							</a>
+							<a th:href="@{/user/eliminar/} + ${user.id}" class="btn btn--delete">
+								<i class="fas fa-trash-alt"></i><span>Eliminar</span>
+							</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</main>
+				
+		<footer th:replace="layout/layout :: footer"></footer>
+	</div>
+	
+	
+	<div th:replace="layout/layout :: scripts"></div>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<nav th:fragment="nav" class="nav">
+
+	<h3 class="nav__title">Menu</h3>
+	<ul class="nav__list">
+		<li class="nav__item">
+			<a th:href="@{/user/}" class="nav__link">
+					<i class="fas fa-users fa-2x"></i><span>Gestionar usuarios</span>
+			</a>
+		</li>
+		<li class="nav__item">
+			<a th:href="@{/menu/}" class="nav__link">
+				<i class="fas fa-utensils fa-2x"></i><span>Actualizar carta</span>
+			</a>
+		</li>
+		<li class="nav__item">
+			<a th:href="@{/comanda/}" class="nav__link">
+				<i class="fas fa-clipboard fa-2x"></i><span>Gestionar comanda</span>
+			</a>
+		</li>
+		<li class="nav__item">
+			<a th:href="@{/reporte/}" class="nav__link">
+				<i class="fas fa-file-invoice-dollar fa-2x"></i><span>Emitir reporte</span>
+			</a>
+		</li>
+	</ul>
+</nav>

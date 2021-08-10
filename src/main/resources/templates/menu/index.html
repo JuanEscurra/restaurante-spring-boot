@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head">
+<meta charset="UTF-8">
+<title>asdas</title>
+</head>
+<body>
+	<div class="container">
+	
+		<header th:replace="layout/header :: header"></header>
+	
+		<nav th:replace="layout/navbar :: nav"></nav>
+		
+		<main class="main">
+			<h3 class="section-title">Carta de hoy</h3>
+			<div class="flex">
+				<div>
+					<form th:action="@{/menu/search}" id="searchProduct">
+						<input type="text" name="name" placeholder="Ingrese el nombre" id="nameProduct"/>
+						<button type="submit">Buscar</button>
+					</form>
+				</div>
+				<div>
+					<a th:href="@{/menu/reset}" class="btn btn--cancel">
+						Reiniciar carta
+					</a>
+					<a th:href="@{/menu/form/}" class="btn btn--add">
+						Agregar producto
+					</a>
+					<label for="btn-modal" class="btn btn--update">
+						Modificar carta
+					</label>
+					<input type="checkbox" id="btn-modal" />
+					<div class="modal">
+						<div class="modal__header">
+							<h4>Agregar producto</h4>
+							<label class="modal__shutdown" for="btn-modal">
+								<i class="fas fa-times-circle fa-2x"></i>									
+							</label>
+						</div>
+						<div class="modal__body">
+							<form th:action="@{/menu/register}"
+								method="post"
+								th:object="${product}"
+								class="form"
+								autocomplete="off"
+								id="formAdd">
+								<input
+									type="hidden"
+									th:field="*{idProduct}"/>
+								<input
+									type="hidden"
+									th:field="*{state}" value="1"/>
+								<div class="form__field">
+									<label for="name">Nombre</label>
+									<select
+										type="text"
+										th:field="*{name}"
+										class="form__input" th:errorclass="error">
+										<option value="">--Selecionar--</option>
+										<option value="qweasd">qweasd</option>
+										<option th:each="product : ${products}"
+											th:text="${product.name}" th:value="${product.name}"></option>
+									</select>
+									<div
+										th:if="${#fields.hasErrors('name')}"
+										th:errors="*{name}" class="form__error"></div>
+								</div>
+								<div class="form__field">
+									<label for="price">Precio</label>
+									<input
+										type="number"
+										th:field="*{price}"
+										class="form__input"
+										th:errorclass="error" readonly/>
+									<div th:if="${#fields.hasErrors('price')}"
+										th:errors="*{price}"
+										class="form__error"></div>
+								</div>
+								<div class="form__field">
+									<label for="type">Tipo</label>
+									<input
+										id="type"
+										type="text"
+										th:field="*{type}"
+										class="form__input"
+										th:errorclass="error" readonly/>
+									<!--
+									<select id="type" th:field="*{type}" class="form__input" th:errorclass="error" readonly>
+										<option value="entrada">Entrada</option>
+										<option value="segundo">Segundo</option>
+										<option value="bebida">Bebida</option>
+									</select>-->
+								</div>
+								<div class="form__field">
+									<label for="stock">Stock</label>
+									<input
+										type="number"
+										min="0"
+										th:field="*{stock}"
+										class="form__input"
+										th:errorclass="error"/>
+									<div th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}" class="form__error"></div>
+								</div>
+								<div class="btn__double">
+									<label for="btn-modal" class="btn btn--cancel">Cancelar</label>
+									<button type="submit" class="btn btn--add">Registrar</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="content">
+				<div>
+					<h4>Carta</h4>
+					<p th:if="${productsActive == null or productsActive.isEmpty()}">
+						No hay productos agregados a la carta
+					</p>
+					<table 
+						class="table"
+						th:if="${productsActive != null and !productsActive.isEmpty()}">
+						<thead class="table__head">
+							<tr>
+								<th>Nombre</th>
+								<th>Precio</th>
+								<th>Stock</th>
+								<th>Tipo</th>
+							</tr>
+						</thead>
+						<tbody class="table__body">
+							<tr th:each="product: ${productsActive}">
+								<td th:text="${product.name}"></td>
+								<td th:text="${product.price}"></td>
+								<td th:text="${product.stock}"></td>
+								<td th:text="${product.type}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div>
+					<h4>Lista de productos</h4>
+					<p th:if="${products == null or products.isEmpty()}">
+						No hay productos agregados al sistema
+					</p>
+					<table
+						class="table"
+						id="tableProducts"
+						th:if="${products != null and !products.isEmpty()}">
+						<thead class="table__head">
+							<tr>
+								<th>Nombre</th>
+								<th>Precio</th>
+								<th>Tipo</th>
+								<th>Acciones</th>
+							</tr>
+						</thead>
+						<tbody class="table__body">
+							<tr th:each="product: ${products}" th:id="'row-' + ${product.idProduct}">
+								<td th:text="${product.name}"></td>
+								<td th:text="${product.price}"></td>
+								<td th:text="${product.type}"></td>
+								<td>
+									<a th:href="@{/menu/form/} + ${product.idProduct}" class="btn btn--update">
+										<i class="fas fa-edit"></i><span>Editar</span>
+									</a>
+									<a th:data-id="${product.idProduct}" class="btn btn--delete delete-products">
+										<i class="fas fa-trash-alt"></i><span>Eliminar</span>
+									</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</main>
+		
+		<footer th:replace="layout/layout :: footer"></footer>
+	</div>
+	
+	<div th:replace="layout/layout :: scripts"></div>
+	<script type="text/javascript" th:src="@{/js/products.js}"></script>
+</body>
+</html>
