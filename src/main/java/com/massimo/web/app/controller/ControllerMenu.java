@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.massimo.web.app.models.entity.Product;
-import com.massimo.web.app.models.service.IProductService;
+import com.massimo.web.app.domain.entity.Product;
+import com.massimo.web.app.service.IProductService;
 
 @Controller
 @RequestMapping("/menu")

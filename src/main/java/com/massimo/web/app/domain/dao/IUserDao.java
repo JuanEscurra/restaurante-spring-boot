@@ -1,10 +1,10 @@
-package com.massimo.web.app.models.dao;
+package com.massimo.web.app.domain.dao;
 
 import java.util.List;
 
-import org.springframework.data.repository.CrudRepository;
+import com.massimo.web.app.domain.entity.User;
 
-import com.massimo.web.app.models.entity.User;
+import org.springframework.data.repository.CrudRepository;
 
 public interface IUserDao extends CrudRepository<User, Long>{
 	

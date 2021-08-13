@@ -1,16 +1,17 @@
-package com.massimo.web.app.models.dao;
+package com.massimo.web.app.domain.dao;
 
 import java.util.List;
 
 import javax.transaction.Transactional;
 
+import com.massimo.web.app.domain.entity.Product;
+
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
-import com.massimo.web.app.models.entity.Product;
-
 public interface IProductDao extends CrudRepository<Product, Long> {
+
 	@Query("select p from Product p where p.name = ?1")
 	Product findByName(String name);
 	

@@ -1,4 +1,4 @@
-package com.massimo.web.app.models.entity;
+package com.massimo.web.app.domain.entity;
 
 import java.util.Date;
 

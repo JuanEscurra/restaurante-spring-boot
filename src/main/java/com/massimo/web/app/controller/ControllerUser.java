@@ -15,23 +15,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.massimo.web.app.models.dao.IRoleDao;
-import com.massimo.web.app.models.entity.User;
-import com.massimo.web.app.models.service.IUserService;
+import com.massimo.web.app.domain.entity.Role;
+import com.massimo.web.app.domain.entity.User;
+import com.massimo.web.app.service.IUserService;
 
 @Controller
 @RequestMapping("/user")
 public class ControllerUser {
 	
 	@Autowired
-	private IRoleDao roleDao;
-	
-	@Autowired
 	private IUserService userService;
 	
 	@ModelAttribute
 	public void getRoles(Model model) {
-		model.addAttribute("roles", roleDao.findAll());
+		model.addAttribute("roles", Role.values());
 		model.addAttribute("user", new User());
 	}
 	

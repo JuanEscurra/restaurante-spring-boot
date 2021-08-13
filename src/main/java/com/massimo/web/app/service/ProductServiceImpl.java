@@ -1,12 +1,12 @@
-package com.massimo.web.app.models.service;
+package com.massimo.web.app.service;
 
 import java.util.List;
 
+import com.massimo.web.app.domain.dao.IProductDao;
+import com.massimo.web.app.domain.entity.Product;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.massimo.web.app.models.dao.IProductDao;
-import com.massimo.web.app.models.entity.Product;
 
 @Service
 public class ProductServiceImpl implements IProductService {
@@ -17,6 +17,7 @@ public class ProductServiceImpl implements IProductService {
 	
 	@Override
 	public List<Product> findAll() {
+		
 		return (List<Product>) productDao.findAll();
 	}
 

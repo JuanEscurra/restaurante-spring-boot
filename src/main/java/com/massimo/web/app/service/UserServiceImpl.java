@@ -1,13 +1,13 @@
-package com.massimo.web.app.models.service;
+package com.massimo.web.app.service;
 
 import java.util.List;
+
+import com.massimo.web.app.domain.dao.IUserDao;
+import com.massimo.web.app.domain.entity.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.massimo.web.app.models.dao.IUserDao;
-import com.massimo.web.app.models.entity.User;
 
 @Service
 public class UserServiceImpl implements IUserService{

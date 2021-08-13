@@ -1,8 +1,8 @@
-package com.massimo.web.app.models.service;
+package com.massimo.web.app.service;
 
 import java.util.List;
 
-import com.massimo.web.app.models.entity.Product;
+import com.massimo.web.app.domain.entity.Product;
 
 public interface IProductService {
 	
