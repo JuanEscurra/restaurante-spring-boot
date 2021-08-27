@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout/layout :: head">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/head :: head">
 </head>
 <body>
 
@@ -50,10 +51,10 @@
 			</table>
 		</main>
 				
-		<footer th:replace="layout/layout :: footer"></footer>
+		<footer th:replace="layout/footer :: footer"></footer>
 	</div>
 	
 	
-	<div th:replace="layout/layout :: scripts"></div>
+	<div th:replace="layout/scripts :: scripts"></div>
 </body>
 </html>

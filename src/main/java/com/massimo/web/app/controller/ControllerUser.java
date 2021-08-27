@@ -17,7 +17,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.massimo.web.app.domain.entity.Role;
 import com.massimo.web.app.domain.entity.User;
-import com.massimo.web.app.service.IUserService;
+import com.massimo.web.app.service.user.IUserService;
 
 @Controller
 @RequestMapping("/user")
@@ -27,7 +27,7 @@ public class ControllerUser {
 	private IUserService userService;
 	
 	@ModelAttribute
-	public void getRoles(Model model) {
+	public void data(Model model) {
 		model.addAttribute("roles", Role.values());
 		model.addAttribute("user", new User());
 	}

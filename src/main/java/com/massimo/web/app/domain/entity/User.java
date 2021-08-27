@@ -6,16 +6,17 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import lombok.Data;
 
@@ -25,7 +26,7 @@ import javax.persistence.JoinColumn;
 @Data
 @Table(name = "users")
 public class User implements Serializable{
-
+	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -57,5 +58,8 @@ public class User implements Serializable{
 		return serialVersionUID;
 	}
 	
-
+	public String getPassword() {
+		return password;
+	}
+	
 }

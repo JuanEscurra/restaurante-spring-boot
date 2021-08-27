@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout/layout :: head">
+<head th:replace="layout/head :: head">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -41,9 +41,9 @@
 			</form>
 		</main>
 		
-		<footer th:replace="layout/layout :: footer"></footer>
+		<footer th:replace="layout/footer :: footer"></footer>
 	</div>
 	
-	<div th:replace="layout/layout :: scripts"></div>
+	<div th:replace="layout/scripts :: scripts"></div>
 </body>
 </html>

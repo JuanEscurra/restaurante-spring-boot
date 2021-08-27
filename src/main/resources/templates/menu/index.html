@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout/layout :: head">
+<head th:replace="layout/head :: head">
 <meta charset="UTF-8">
 <title>asdas</title>
 </head>
@@ -175,10 +175,10 @@
 			</div>
 		</main>
 		
-		<footer th:replace="layout/layout :: footer"></footer>
+		<footer th:replace="layout/footer :: footer"></footer>
 	</div>
 	
-	<div th:replace="layout/layout :: scripts"></div>
+	<div th:insert="layout/scripts :: scripts"></div>
 	<script type="text/javascript" th:src="@{/js/products.js}"></script>
 </body>
 </html>

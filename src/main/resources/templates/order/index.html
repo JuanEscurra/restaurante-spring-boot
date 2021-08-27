@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout/layout :: head">
+<head th:replace="layout/head :: head">
 </head>
 <body>
 
@@ -12,13 +12,90 @@
 		
 		<main class="main">
 			<h3 class="section-title">Lista de pedidos</h3>
-			
+			<div class="flex">
+				<a th:href="@{/order/form}" class="btn btn--add">
+					<i class="fas fa-plus"></i>Registrar pedido
+				</a>
+				<div>
+					<label for="btn-modal" class="btn btn--add">
+						Reservar mesa
+					</label>
+					<input type="checkbox" id="btn-modal" />
+					<div class="modal">
+						<div class="modal__header">
+							<h4>Mesa a ocupar</h4>
+							<label class="modal__shutdown" for="btn-modal">
+								<i class="fas fa-times-circle fa-2x"></i>									
+							</label>
+						</div>
+						<div class="modal__body">
+							<form
+								th:action="@{/order/register}"
+								method="post"
+								th:object="${order}"
+								class="form">
+								<input
+										type="hidden"
+										th:field="*{idOrder}"
+										class="form__input"/>
+								<div class="form__field">
+									<label for="tableNumber">N° Mesa</label>
+									<input
+										type="number"
+										th:field="*{tableNumber}"
+										class="form__input"/>
+								</div>
+								<div class="btn__double">
+									<label for="btn-modal" class="btn btn--cancel">Cancelar</label>
+									<button type="submit" class="btn btn--add">Registrar</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="content">
+				<div>
+					<h4>Ordenes activas</h4>
+					<p th:if="${orders == null or orders.isEmpty()}">
+						No hay ordenes activas en este momento
+					</p>
+					<table
+						class="table"
+						th:if="${orders != null and !orders.isEmpty()}">
+						<thead class="table__head">
+							<tr>
+								<th>Fecha</th>
+								<th>Mesa</th>
+								<th>Acciones</th>
+							</tr>
+						</thead>
+						<tbody class="table__body">
+							<tr th:each="order: ${orders}">
+								<td th:text="${#dates.format(order.date, 'dd-MM-yyyy HH:mm')}"></td>
+								<td th:text="${order.tableNumber}"></td>
+								<td>
+									<a th:href="@{/order/form/} + ${order.idOrder}" class="btn btn--update">
+										<i class="fas fa-edit"></i><span>Editar</span>
+									</a>
+									<a th:href="@{/order/delete/} + ${order.idOrder}" class="btn btn--delete">
+										<i class="fas fa-trash-alt"></i><span>Eliminar</span>
+									</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div>
+					<h4>qweasd</h4>
+				</div>
+			</div>
 		</main>
 				
-		<footer th:replace="layout/layout :: footer"></footer>
+		<footer th:replace="layout/footer :: footer"></footer>
 	</div>
 	
 	
-	<div th:replace="layout/layout :: scripts"></div>
+	<div th:replace="layout/scripts :: scripts"></div>
 </body>
 </html>

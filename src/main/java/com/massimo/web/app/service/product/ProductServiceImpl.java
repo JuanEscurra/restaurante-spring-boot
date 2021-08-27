@@ -1,4 +1,4 @@
-package com.massimo.web.app.service;
+package com.massimo.web.app.service.product;
 
 import java.util.List;
 
@@ -17,13 +17,12 @@ public class ProductServiceImpl implements IProductService {
 	
 	@Override
 	public List<Product> findAll() {
-		
 		return (List<Product>) productDao.findAll();
 	}
 
 	@Override
 	public void save(Product product) {
-		productDao.save(product);
+		System.out.println(productDao.save(product).toString());
 	}
 
 	@Override

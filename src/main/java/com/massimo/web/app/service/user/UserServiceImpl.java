@@ -1,4 +1,4 @@
-package com.massimo.web.app.service;
+package com.massimo.web.app.service.user;
 
 import java.util.List;
 
@@ -6,11 +6,15 @@ import com.massimo.web.app.domain.dao.IUserDao;
 import com.massimo.web.app.domain.entity.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserServiceImpl implements IUserService{
+	
+	@Autowired
+	private PasswordEncoder bCryptPassword;
 	
 	@Autowired
 	private IUserDao userDao;
@@ -24,6 +28,7 @@ public class UserServiceImpl implements IUserService{
 	@Override
 	@Transactional
 	public void save(User user) {
+		user.setPassword(bCryptPassword.encode(user.getPassword()));
 		userDao.save(user);
 	}
 

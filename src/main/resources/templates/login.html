@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      >
+<head>
+    <head th:insert="layout/head ::head"></head>
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+</head>
+<body>
+    <div class="container--login">
+        <form th:action="@{/login}" method="POST" class="form--login">
+            <div class="form__header">
+                <h2>Autenticar usuario</h2>
+            </div>
+            <div class="form__body">
+                <div class="form__campo">
+                    <i class="fas fa-user" style="color:white"></i>
+                    <input
+                    	class="form__input"
+                    	type="text"
+                    	name="username"
+                    	id="username"
+                    	placeholder="Correo electronico" 
+                    	autofocus
+                    	required>
+                </div>
+                <div class="form__campo">
+                    <i class="fas fa-lock" style="color:white"></i>
+                    <input
+                    	class="form__input"
+                    	type="password"
+                    	name="password"
+                    	id="password"
+                    	placeholder="Contraseña"
+                    	required>
+                </div>
+                <button class="btn__success" type="submit">Ingresar</button>
+            </div>
+            <div class="form__footer">
+                <a href="#">¿Olvidaste la contraseña?</a>
+            </div>
+            <div th:text="${error != null} ? ${error} : ${logout}" th:if="${error != null or logout != null}"
+           		class="msg"
+           		th:classappend="${error != null}? msg--error : msg--success"></div>
+        </form>
+    </div>
+    <div th:insert="layout/scripts ::scripts"></div>
+</body>
+</html>

@@ -1,8 +1,12 @@
 <nav th:fragment="nav" class="nav">
-
-	<h3 class="nav__title">Menu</h3>
+	
+	<h3 class="nav__title">
+		Menu
+		<br/>
+		<span  sec:authentication="principal.authorities"></span>
+	</h3>
 	<ul class="nav__list">
-		<li class="nav__item">
+		<li class="nav__item" sec:authorize="hasAuthority('ADMINISTRADOR')">
 			<a th:href="@{/user/}" class="nav__link">
 					<i class="fas fa-users fa-2x"></i><span>Gestionar usuarios</span>
 			</a>
