@@ -30,5 +30,12 @@ public class Product {
 	private Boolean state;
 	
 	private Integer stock;
-	
+
+	public void reduceStock(Integer quantity) {
+		this.stock -= quantity;
+	}
+
+	public void increaseStock(Integer quantity) {
+		this.stock +=  quantity;
+	}
 }

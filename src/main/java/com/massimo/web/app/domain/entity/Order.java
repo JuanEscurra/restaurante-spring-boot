@@ -1,5 +1,6 @@
 package com.massimo.web.app.domain.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -8,11 +9,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -28,8 +32,7 @@ public class Order {
     private Long idOrder;
 
     @Column(name = "date_created", nullable = false)
-    //@Temporal(TemporalType.TIMESTAMP)
-    @JsonFormat(timezone = "GMT-05:00")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date date = new Date(System.currentTimeMillis());
     
     @Column(name = "table_number", nullable = false)
@@ -41,8 +44,9 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
     
-    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
-    private List<OrderDetail> details;
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<OrderDetail> details = new ArrayList<>();
+
 
     public void setIdOrder(Long idOrder) {
     	this.idOrder = idOrder;
@@ -50,5 +54,10 @@ public class Order {
     
     public Long getIdOrder() {
     	return this.idOrder;
+    }
+
+    public Double calculateTotalPrice() {
+        return details.stream().map((detail)-> detail.calculateAmount())
+                .reduce((amount, accumulator)-> amount + accumulator).orElse(null);
     }
 }

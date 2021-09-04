@@ -112,27 +112,7 @@ body {
     font-weight: bold;
 }
 
-.msg {
-	width: 100%;
-	color: white;
-	font-weight: 600;
-	background-color: #EB4A47;
-	border-radius: 3px;
-	padding: 5px 0;
-	margin: 15px 0;
-}
 
-.msg--error {
-	background-color: #EB4A47;
-}
-
-.msg--success {
-	background-color: #7ae260;
-}
-
-.msg--warning {
-	background-color: #eae37c;	
-}
 
 @media (max-width: 375px) {
     .form--login {

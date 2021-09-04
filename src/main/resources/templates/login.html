@@ -39,11 +39,14 @@
             <div class="form__footer">
                 <a href="#">¿Olvidaste la contraseña?</a>
             </div>
-            <div th:text="${error != null} ? ${error} : ${logout}" th:if="${error != null or logout != null}"
+            <div th:if="${error != null or logout != null}"
            		class="msg"
-           		th:classappend="${error != null}? msg--error : msg--success"></div>
+           		th:classappend="${error != null}? msg--error : msg--success">
+                <span th:text="${error != null} ? ${error} : ${logout}"></span>
+                <div class="msg__close"><i class="fas fa-2x fa-times-circle"></i></div>
+            </div>
         </form>
     </div>
-    <div th:insert="layout/scripts ::scripts"></div>
+    <th:block th:insert="layout/scripts ::scripts"></th:block>
 </body>
 </html>

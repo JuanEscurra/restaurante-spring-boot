@@ -5,7 +5,12 @@
 		<br/>
 		<span  sec:authentication="principal.authorities"></span>
 	</h3>
-	<ul class="nav__list">
+	<ul class="nav__list" id="nav-main-list">
+		<li class="nav__item">
+			<a th:href="@{/dashboard/}" class="nav__link">
+				<i class="fas fa-chart-line fa-2x"></i><span>Dashboard</span>
+			</a>
+		</li>
 		<li class="nav__item" sec:authorize="hasAuthority('ADMINISTRADOR')">
 			<a th:href="@{/user/}" class="nav__link">
 					<i class="fas fa-users fa-2x"></i><span>Gestionar usuarios</span>

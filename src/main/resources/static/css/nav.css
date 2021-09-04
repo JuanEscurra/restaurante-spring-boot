@@ -57,7 +57,14 @@
 
 .nav__link:hover {
 	color: var(--colorAmarillo);
-	border-left: 7px solid var(--colorAmarillo);
+	border-left: 15px solid var(--colorAmarillo);
+	font-weight: 600;
+}
+
+.nav__link.active {
+	color: var(--colorAmarillo);
+	border-left: 15px solid var(--colorAmarillo);
+	font-weight: 600;
 }
 
 

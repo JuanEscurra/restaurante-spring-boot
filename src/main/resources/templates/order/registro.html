@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/head :: head">
+</head>
+<body>
+
+	<div class="container">
+	
+		<header th:replace="layout/header :: header"></header>
+	
+		<nav th:replace="layout/navbar :: nav"></nav>
+		
+		<main class="main">
+			<h3 class="section-title" th:text="'Atención en la' + ${order.tableNumber}"></h3>
+			<div class="content">
+				<form
+					th:object="${orderDetail}"
+					th:action="@{/order/detail}"
+					method="post"
+					id="form-detail"
+					class="form">
+					<div>
+						<input
+								type="hidden"
+								name="idOrder"
+								th:value="${order.idOrder}">
+						<div class="form__field">
+							<label>Producto</label>
+							<select
+									type="number"
+									id="product"
+									name="idProduct"
+									class="form__input">
+								<option value="">--selecionar--</option>
+								<option
+										th:each="product: ${products}"
+										th:value="${product.idProduct}"
+										th:text="${product.name}"></option>
+							</select>
+						</div>
+						<div class="form__field">
+							<label for="quantity">Cantidad</label>
+							<input
+									type="number"
+									th:field="*{quantity}"
+									class="form__input"/>
+						</div>
+					</div>
+					<div>
+						<button
+							type="submit"
+							class="btn btn--add">
+							<i class="fas fa-plus"></i>Agregar pedido
+						</button>
+						<a th:href="@{/order/finish/} + ${order.idOrder}"
+							class="btn btn--cancel"
+							id="finish-order" style="display: none">
+							<i class="fas fa-cart-arrow-down"></i>Finalizar pedido
+						</a>
+					</div>
+				</form>
+				<div>
+					<table class="table">
+						<thead class="table__head">
+							<tr>
+								<th>Producto</th>
+								<th>Precio</th>
+								<th>Cantidad</th>
+								<th>Importe</th>
+								<th>ACCIONES</th>
+							</tr>
+						</thead>
+						<tbody class="table__body" id="tbody-details">
+							<tr th:each="detail : ${order.details}" th:id="'row-' + ${detail.idOrderDetail}">
+								<td th:text="${detail.product.name}"></td>
+								<td th:text="${detail.product.price}"></td>
+								<td th:text="${detail.quantity}"></td>
+								<td th:text="${detail.calculateAmount()}"></td>
+								<td>
+									<button
+								   		class="btn btn--delete delete-details"
+										th:data-id="${detail.idOrderDetail}">
+										Eliminar
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+		</main>
+				
+		<footer th:replace="layout/footer :: footer"></footer>
+	</div>
+	
+	
+	<th:block th:replace="layout/scripts :: scripts"></th:block>
+	<script type="text/javascript" th:src="@{/js/product/data.js}"></script>
+	<script type="text/javascript" th:src="@{/js/order/data.js}"></script>
+	<script type="text/javascript" th:src="@{/js/order/main.js}"></script>
+</body>
+</html>

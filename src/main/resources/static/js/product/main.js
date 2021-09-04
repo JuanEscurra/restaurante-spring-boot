@@ -16,7 +16,6 @@ searchProduct.addEventListener('submit', (e) => {
 	const nameProduct = document.querySelector('#nameProduct');
 	getProductsByNameContaining(nameProduct.value)
 	.then(products => {
-		console.log(products);
 		products.forEach(product => {
 			addProductTable(product);
 		})
@@ -39,24 +38,20 @@ formAdd.addEventListener('submit', (e) => {
 
 const deleteProducts = document.querySelectorAll('.delete-products');
 deleteProducts.forEach(btnDelete => {
-	btnDelete.addEventListener('click', () => {
+	btnDelete.addEventListener('click', (e) => {
+		e.preventDefault();
 		console.log(btnDelete.dataset.id);
 		Swal.fire({
-			title: 'Are you sure?',
-			text: "You won't be able to revert this!",
+			title: '¿Estas seguro?',
+			text: "¡No podrás revertir esto!",
 			icon: 'warning',
 			showCancelButton: true,
 			confirmButtonColor: '#3085d6',
 			cancelButtonColor: '#d33',
-			confirmButtonText: 'Yes, delete it!'
+			confirmButtonText: 'Si, eliminelo'
 		}).then((result) => {
 			if (result.isConfirmed) {
-				document.querySelector(`#row-${btnDelete.dataset.id}`).remove();
-				Swal.fire(
-				'Deleted!',
-				'Your file has been deleted.',
-				'success'
-			  )
+				window.location.href = btnDelete.getAttribute('href');
 			}
 		})
 	});
@@ -102,23 +97,3 @@ const getAutoComplete = (name) => {
 }	
 
 // ===================================================================
-const getProductsByNameContaining = async(name) => {
-	const data = await fetch(`/menu/search?name=${name}`);
-	console.log(data);
-	if(data.status !== 200) {
-		return {};
-	} else {
-		return data.json();
-	}
-}
-
-const getProductByName = async(name) => {
-	const data = await fetch(`/menu/search/${name}`);
-	if(data.status !== 200) {
-		return {};
-	} else {
-		return data.json();
-	}
-}
-
-//=====================================================================

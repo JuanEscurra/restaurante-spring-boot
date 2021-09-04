@@ -1,0 +1,62 @@
+
+:root {
+    --colorVerde: #00a160;
+    --colorRojo: #ee3124;
+    --colorAmarillo: #ffc425;
+    --colorOscuro: #383838;
+}
+
+body {
+    margin: 0;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+.container {
+    min-height: 100vh;
+    display:  grid;
+    grid-template-columns: 20% 80%;
+    grid-template-rows: 75px auto auto;
+    background-color: #F5F5F5;
+}
+
+.main {
+    grid-column: 2/3;
+    grid-row: 2/3;
+    padding: 40px;
+    background-color: #F5F5F5;
+}
+
+.footer {
+    grid-column: 2/3;
+    grid-row: 3/4;
+    margin: 10px 15px;
+    border-top: 2px lightgray solid;
+    background-color: #F5F5F5;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+}
+
+.section-title {
+    font-size: 24px;
+    text-align: center;
+}
+
+.content {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 15px 0;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
