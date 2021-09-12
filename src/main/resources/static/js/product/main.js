@@ -8,10 +8,13 @@ inputName.addEventListener('change', () => {
 const searchProduct = document.querySelector('#searchProduct');
 searchProduct.addEventListener('submit', (e) => {
 	e.preventDefault();
+	const tbodyProducts = document.querySelector('#table-body-products');
+	tbodyProducts.innerHTML = '';
+	/*
 	const tableProducts = document.querySelector('#tableProducts');
 	for(var i = tableProducts.rows.length - 1; i > 0; i--) {
 		tableProducts.deleteRow(i);
-	}
+	}*/
 
 	const nameProduct = document.querySelector('#nameProduct');
 	getProductsByNameContaining(nameProduct.value)
@@ -60,16 +63,16 @@ deleteProducts.forEach(btnDelete => {
 //=====================================================================
 
 const addProductTable = (product) => {
-	const tableProducts = document.querySelector('#tableProducts');
+	const tableProducts = document.querySelector('#table-body-products');
 	tableProducts.innerHTML += `<tr>
-		<td>${product.name}</td>
-		<td>${product.price}</td>
-		<td>${product.type}</td>
-		<td>
+		<td data-label="Nombre">${product.name}</td>
+		<td data-label="Precio">${product.price}</td>
+		<td data-label="Tipo">${product.type}</td>
+		<td data-label="Acciones">
 			<a href="/menu/form/${product.idProduct}" class="btn btn--update">
 				<i class="fas fa-edit"></i><span>Editar</span>
 			</a>
-			<a th:href="/menu/delete/${product.idProduct}" class="btn btn--delete">
+			<a th:href="/menu/delete/${product.idProduct}" class="btn btn--delete delete-products">
 				<i class="fas fa-trash-alt"></i><span>Eliminar</span>
 			</a>
 		</td>

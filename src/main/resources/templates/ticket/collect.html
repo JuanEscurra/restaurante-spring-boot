@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/head :: head">
+</head>
+<body>
+    <div class="container">
+
+        <header th:replace="layout/header :: header"></header>
+
+        <nav th:replace="layout/navbar :: nav"></nav>
+
+        <main class="main">
+            <div
+                    class="msg"
+                    th:classappend="'msg--' + ${message.type.name}"
+                    th:if="${message != null}">
+                <span th:text="${message.value}"></span>
+                <div class="msg__close"><i class="fas fa-2x fa-times-circle"></i></div>
+            </div>
+            <div class="card">
+                <h3
+                    class="section-title" th:text="'Cobrar de pedido (Mesa ' + ${order.tableNumber} + ')'">
+                </h3>
+                <div class="content">
+                    <div>
+                        <div class="form__field">
+                            <label for="tableNumber">N° Mesa</label>
+                            <input
+                                    type="number"
+                                    step="0.01"
+                                    disabled
+                                    th:value="${order.tableNumber}"
+                                    id="table-number"
+                                    class="form__input"/>
+                        </div>
+                        <div class="form__field">
+                            <label for="tableNumber">Importe</label>
+                            <input
+                                    type="number"
+                                    step="0.01"
+                                    disabled
+                                    th:value="${order.totalPrice}"
+                                    id="importe"
+                                    class="form__input"/>
+                        </div>
+                        <div class="form__field" th:if="${order.status.name != 'PAGADO'}">
+                            <label for="pago">Pago</label>
+                            <input
+                                    type="number"
+                                    step="0.01"
+                                    id="pago"
+                                    th:min="${order.calculateTotalPrice()}"
+                                    class="form__input"/>
+                        </div>
+                        <div class="form__field" th:if="${order.status.name != 'PAGADO'}">
+                            <label for="tableNumber">vuelto</label>
+                            <input
+                                    type="number"
+                                    step="0.01"
+                                    id="vuelto"
+                                    disabled
+                                    class="form__input"/>
+                        </div>
+                        <div class="width--100-mobile">
+                            <a th:href="@{/ticket/finish/} + ${order.idOrder}"
+                                th:if="${order.status.name() == 'ATENDIDO'}"
+                                class="btn btn--update width--100"
+                                style="display: block">Cobrar</a>
+                            <a th:href="@{/ticket/print/} + ${order.idOrder}"
+                               class="btn btn--cancel width--100"
+                               style="display: block">Imprimir boleta</a>
+                            <a th:href="@{__${order.status.name != 'PAGADO' ? '/ticket/' : '/report/'}__}"
+                               class="btn btn--cancel width--100"
+                               style="display: block">Regresar</a>
+                        </div>
+                    </div>
+                    <div>
+                        <h4>Productos consumidos</h4>
+                        <table th:replace="order/detalles-pedido :: table-detalles-pedido"></table>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer th:replace="layout/footer :: footer"></footer>
+    </div>
+
+    <th:block th:insert="layout/scripts :: scripts"></th:block>
+    <script th:src="@{/js/ticket/main.js}"></script>
+</body>
+</html>

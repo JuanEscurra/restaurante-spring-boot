@@ -1,10 +1,73 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/head :: head">
 </head>
 <body>
-	hola Mundo
+
+	<div class="container">
+
+		<header th:replace="layout/header :: header"></header>
+
+		<nav th:replace="layout/navbar :: nav"></nav>
+
+		<main class="main flex flex--center">
+			<div class="card card--section" sec:authorize="hasAuthority('ADMINISTRADOR')">
+				<img src="../img/usuarios.jpg">
+				<div class="card__description">
+					<h2>Gestionar usuarios</h2>
+					<div>
+						Sección para registrar e informe de los empleados y usuarios del sistemas.
+					</div>
+					<a class="btn btn--detail" th:href="@{/user/}">Ver más</a>
+				</div>
+			</div>
+			<div class="card card--section">
+				<img src="../img/menu.jpg">
+				<div class="card__description">
+					<h2>Actualizar carta</h2>
+					<div>
+						Sección para registrar y definir el menu que se preparará hoy día.
+					</div>
+					<a class="btn btn--detail" th:href="@{/menu/}">Ver más</a>
+				</div>
+			</div>
+			<div class="card card--section">
+				<img src="../img/comanda.jpg">
+				<div class="card__description">
+					<h2>Gestionar comanda</h2>
+					<div>
+						Sección para registrar los pedidos de un cliente.
+					</div>
+					<a class="btn btn--detail" th:href="@{/order/}">Ver más</a>
+				</div>
+			</div>
+			<div class="card card--section" sec:authorize="hasAnyAuthority('ADMINISTRADOR','CAJERO')">
+				<img src="../img/collect.jpg">
+				<div class="card__description">
+					<h2>Emitir boleta</h2>
+					<div>
+						Sección para registrar e información de los empleados y usuarios del sistemas.
+					</div>
+					<a class="btn btn--detail" th:href="@{/ticket/}">Ver más</a>
+				</div>
+			</div>
+			<div class="card card--section" sec:authorize="hasAnyAuthority('ADMINISTRADOR','CAJERO')">
+				<img src="../img/report.jpg">
+				<div class="card__description">
+					<h2>Emitir reporte</h2>
+					<div>
+						Sección para generar un informe de los ingresos según las fechas solicitadas.
+					</div>
+					<a class="btn btn--detail" th:href="@{/report/}">Ver más</a>
+				</div>
+			</div>
+		</main>
+
+		<footer th:replace="layout/footer :: footer"></footer>
+	</div>
+
+
+	<th:block th:replace="layout/scripts :: scripts"></th:block>
 </body>
 </html>

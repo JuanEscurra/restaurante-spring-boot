@@ -12,9 +12,10 @@
 		
 		<main class="main">
 			<div
-				class="msg msg--error"
-				th:if="${error != null}">
-				<span th:text="${error}"></span>
+				class="msg"
+				th:classappend="'msg--' + ${message.type.name}"
+				th:if="${message != null}">
+				<span th:text="${message.value}"></span>
 				<div class="msg__close"><i class="fas fa-2x fa-times-circle"></i></div>
 			</div>
 			<div class="card">
@@ -60,35 +61,11 @@
 				</div>
 				<div class="content">
 					<div>
-						<h4>Ordenes activas</h4>
+						<h4>Pedidos activos</h4>
 						<p th:if="${orders == null or orders.isEmpty()}">
-							No hay ordenes activas en este momento
+							No hay pedidos activas en este momento
 						</p>
-						<table
-								class="table"
-								th:if="${orders != null and !orders.isEmpty()}">
-							<thead class="table__head">
-							<tr>
-								<th>Fecha</th>
-								<th>Mesa</th>
-								<th>Acciones</th>
-							</tr>
-							</thead>
-							<tbody class="table__body" id="tbody-orders">
-							<tr th:each="order: ${orders}">
-								<td th:text="${#dates.format(order.date, 'dd-MM-yyyy HH:mm')}"></td>
-								<td th:text="${order.tableNumber}"></td>
-								<td>
-									<a th:href="@{/order/form/} + ${order.idOrder}" class="btn btn--update update-order">
-										Editar
-									</a>
-									<a th:href="@{/order/delete/} + ${order.idOrder}" class="btn btn--delete delete-order">
-										Eliminar
-									</a>
-								</td>
-							</tr>
-							</tbody>
-						</table>
+						<table th:replace="order/pedidos :: table-orders"></table>
 					</div>
 				</div>
 			</div>

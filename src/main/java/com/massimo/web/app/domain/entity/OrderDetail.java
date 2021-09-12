@@ -43,6 +43,7 @@ public class OrderDetail {
 	}
 
 	public void increaseQuantity(Integer quantity) {
+		this.product.reduceStock(quantity);
 		this.quantity += quantity;
 	}
 
@@ -59,4 +60,13 @@ public class OrderDetail {
 		return Objects.hash(idOrderDetail, product, quantity);
 	}
 
+	@PreRemove
+	public void beforeRemove() {
+		this.product.increaseStock(quantity);
+	}
+
+	@PrePersist
+	public void beforePersist() {
+		this.product.reduceStock(quantity);
+	}
 }

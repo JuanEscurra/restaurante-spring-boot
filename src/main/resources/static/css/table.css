@@ -35,3 +35,51 @@
 	min-width: 60px;
 	padding: 15px;
 }
+
+@media (max-width: 375px) {
+	.table__head {
+		display: none;
+	}
+
+	.table {
+		font-size: 17px;
+	}
+
+	.table, .table__body, .table tr, .table td {
+		display: block;
+		width: 100%;
+	}
+
+	.table tr {
+		margin: 15px 0;
+		border: #383838 solid 2px;
+		border-radius: 5px;
+		box-sizing: border-box;
+	}
+
+	.table td {
+		box-sizing: border-box;
+		text-align: right;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		padding-left: 50%;
+		position: relative;
+	}
+
+	.table td:before {
+		content: attr(data-label);
+		position: absolute;
+		width: 30%;
+		text-align: left;
+		font-weight: 600;
+		left: 2px;
+	}
+
+	.table td[data-label="Acciones"] {
+		padding: unset;
+	}
+
+	.table td[data-label="Acciones"]:before {
+		content: unset;
+	}
+}

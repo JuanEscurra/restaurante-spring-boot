@@ -12,6 +12,13 @@
 		<nav th:replace="layout/navbar :: nav"></nav>
 		
 		<main class="main">
+			<div
+				class="msg"
+				th:classappend="'msg--' + ${message.type.name}"
+				th:if="${message != null}">
+				<span th:text="${message.value}"></span>
+				<div class="msg__close"><i class="fas fa-2x fa-times-circle"></i></div>
+			</div>
 			<div class="card">
 				<h3 class="section-title">Lista de usuarios</h3>
 				<div class="flex">
@@ -23,7 +30,7 @@
 								type="text"
 								name="lastName"
 								placeholder="Ingrese el apellido"
-								class="form__input"/>
+								class="form__input md"/>
 						<button type="submit" class="btn btn--cancel">Buscar</button>
 					</form>
 				</div>
@@ -39,11 +46,11 @@
 					</thead>
 					<tbody class="table__body">
 					<tr th:each="user: ${users}">
-						<td>Foto</td>
-						<td th:text="${user.name +' ' + user.lastName}"></td>
-						<td th:text="${user.email}"></td>
-						<td th:text="${user.role.name}"></td>
-						<td>
+						<td data-label="Foto">Foto</td>
+						<td data-label="Nombre completo" th:text="${user.name +' ' + user.lastName}"></td>
+						<td data-label="Email" th:text="${user.email}"></td>
+						<td data-label="Rol" th:text="${user.role.name}"></td>
+						<td data-label="Acciones">
 							<a th:href="@{/user/form/} + ${user.id}" class="btn btn--update">
 								Editar
 							</a>

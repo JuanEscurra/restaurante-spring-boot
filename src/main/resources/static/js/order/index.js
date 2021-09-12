@@ -18,5 +18,20 @@ tbodyOrders.addEventListener('click', (e) => {
         })
     } else if(e.target.matches('.update-order')) {
         location.href = e.target.href
+    } else if(e.target.matches('.finish-order')) {
+        Swal.fire({
+            title: '¿Estas seguro?',
+            text: "¡No podrás revertir esto!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, Finalizar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                location.href = e.target.getAttribute('href');
+            }
+        })
     }
 })
+

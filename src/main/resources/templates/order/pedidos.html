@@ -1,0 +1,53 @@
+<table
+        th:fragment="table-orders"
+        class="table"
+        th:if="${orders != null and !orders.isEmpty()}">
+    <thead class="table__head">
+    <tr>
+        <th>Fecha</th>
+        <th>Mesa</th>
+        <th>Total a pagar</th>
+        <th th:if="${orders[0].status.name() != 'PAGADO'}">Acciones</th>
+    </tr>
+    </thead>
+    <tbody class="table__body" id="tbody-orders">
+        <tr th:each="order: ${orders}">
+            <td
+                    data-label="Fecha"
+                    th:text="${#dates.format(order.date, 'dd-MM-yyyy HH:mm')}"></td>
+            <td
+                    data-label="Mesa"
+                    th:text="${order.tableNumber}"></td>
+            <td
+                    data-label="Total a pagar"
+                    th:text="${order.calculateTotalPrice() != null ? order.calculateTotalPrice() : '0'}">
+            <td
+                    data-label="Acciones"
+                    th:if="${order.status.name != 'PAGADO'}">
+                <a th:href="@{/ticket/collect/} + ${order.idOrder}"
+                   class="btn btn--cancel"
+                   th:if="${order.status.name == 'ATENDIDO'}">
+                    Cobrar
+                </a>
+                <a th:href="@{/order/finish/} + ${order.idOrder}"
+                   class="btn btn--cancel finish-order"
+                   id="finish-order"
+                    th:if="${order.status.name == 'POR_ATENDER'}">
+                    Finalizar pedido
+                </a>
+                <a
+                    th:href="@{/order/form/} + ${order.idOrder}"
+                    class="btn btn--update update-order"
+                    th:if="${order.status.name == 'POR_ATENDER'}">
+                    Editar
+                </a>
+                <a
+                    th:href="@{/order/delete/} + ${order.idOrder}"
+                    class="btn btn--delete delete-order"
+                    th:if="${order.status.name == 'POR_ATENDER'}">
+                    Eliminar
+                </a>
+            </td>
+        </tr>
+    </tbody>
+</table>

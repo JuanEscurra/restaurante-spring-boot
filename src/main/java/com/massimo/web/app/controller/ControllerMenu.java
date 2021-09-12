@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.massimo.web.app.config.Message;
+import com.massimo.web.app.config.TypeMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.massimo.web.app.domain.entity.Product;
 import com.massimo.web.app.service.product.IProductService;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/menu")
@@ -56,19 +59,26 @@ public class ControllerMenu {
 	}
 	
 	@PostMapping("/register")
-	public String register(@Valid Product product, BindingResult result, Model model, SessionStatus status) {
-		logger.info("product: " + product);
+	public String register(@Valid Product product,
+						   BindingResult result,
+						   Model model,
+						   SessionStatus status,
+						   RedirectAttributes flash) {
 		if(result.hasErrors()) {
 			return "./menu/registro";
 		}
 		productService.save(product);
+		flash.addFlashAttribute("message",
+				new Message("Se ha guardado el producto exitosamente", TypeMessage.SUCCESSFUL));
 		status.setComplete();
 		return "redirect:/menu/";
 	}
 	
 	@GetMapping("/delete/{id}")
-	public String delete(@PathVariable Long id) {
+	public String delete(@PathVariable Long id, RedirectAttributes flash) {
 		productService.deleteById(id);
+		flash.addFlashAttribute("message",
+				new Message("Se ha eliminado el producto exitosamente", TypeMessage.SUCCESSFUL));
 		return "redirect:/menu/";
 	}
 	

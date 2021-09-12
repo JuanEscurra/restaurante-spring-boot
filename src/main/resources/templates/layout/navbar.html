@@ -26,8 +26,13 @@
 				<i class="fas fa-clipboard fa-2x"></i><span>Gestionar comanda</span>
 			</a>
 		</li>
-		<li class="nav__item">
-			<a th:href="@{/reporte/}" class="nav__link">
+		<li class="nav__item" sec:authorize="hasAnyAuthority('ADMINISTRADOR','CAJERO')">
+			<a th:href="@{/ticket/}" class="nav__link">
+				<i class="fas fa-money-bill-wave-alt fa-2x"></i></i><span>Emitir boleta</span>
+			</a>
+		</li>
+		<li class="nav__item" sec:authorize="hasAnyAuthority('ADMINISTRADOR','CAJERO')">
+			<a th:href="@{/report/}" class="nav__link">
 				<i class="fas fa-file-invoice-dollar fa-2x"></i><span>Emitir reporte</span>
 			</a>
 		</li>

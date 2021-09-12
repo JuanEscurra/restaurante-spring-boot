@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/head :: head">
+</head>
+<body>
+
+    <div class="container">
+
+        <header th:replace="layout/header :: header"></header>
+
+        <nav th:replace="layout/navbar :: nav"></nav>
+
+        <main class="main">
+            <div
+                    class="msg"
+                    th:classappend="'msg--' + ${message.type.name}"
+                    th:if="${message != null}">
+                <span th:text="${message.value}"></span>
+                <div class="msg__close"><i class="fas fa-2x fa-times-circle"></i></div>
+            </div>
+            <div class="card">
+                <h3 class="section-title">Pedidos finalizados</h3>
+                <!--<div class="flex">
+
+                </div>-->
+                <table th:replace="order/pedidos :: table-orders"></table>
+            </div>
+        </main>
+
+        <footer th:replace="layout/footer :: footer"></footer>
+    </div>
+
+
+    <th:block th:replace="layout/scripts :: scripts"></th:block>
+</body>
+</html>

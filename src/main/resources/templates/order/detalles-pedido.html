@@ -1,0 +1,28 @@
+<table
+    th:fragment="table-detalles-pedido"
+    class="table">
+    <thead class="table__head">
+        <tr>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Importe</th>
+            <th th:if="${order.status.name == 'POR_ATENDER'}">ACCIONES</th>
+        </tr>
+    </thead>
+    <tbody class="table__body" id="tbody-details">
+        <tr th:each="detail : ${order.details}" th:id="'row-' + ${detail.idOrderDetail}">
+            <td data-label="Producto" th:text="${detail.product.name}"></td>
+            <td data-label="Precio" th:text="${detail.product.price}"></td>
+            <td data-label="Cantidad" th:text="${detail.quantity}"></td>
+            <td data-label="Importe" th:text="${detail.calculateAmount()}"></td>
+            <td data-label="Acciones" th:if="${order.status.name == 'POR_ATENDER'}">
+                <button
+                        class="btn btn--delete delete-details"
+                        th:data-id="${detail.idOrderDetail}">
+                    Eliminar
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -1,5 +1,6 @@
 package com.massimo.web.app.service.order;
 
+import java.util.Date;
 import java.util.List;
 
 import com.massimo.web.app.domain.dao.IOrderDao;
@@ -40,8 +41,18 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
+    public List<Order> listByDateReport(Date lowerDate, Date upperDate) {
+        logger.info("lowerDate" + lowerDate + "///" + upperDate);
+        if(lowerDate == null || upperDate == null) {
+            return lowerDate == null ?
+                    orderDao.findByDateAndStatus(upperDate, OrderStatus.PAGADO)
+                    : orderDao.findByDateAndStatus(lowerDate, OrderStatus.PAGADO);
+        }
+        return orderDao.findByDateBetweenAndStatus(lowerDate, upperDate, OrderStatus.PAGADO);
+    }
+
+    @Override
     public Order save(Order order) {
-        logger.info("qweasd" + orderDao.findByTableNumberAndStatus(order.getTableNumber(), OrderStatus.POR_ATENDER));
         if(orderDao.findByTableNumberAndStatus(order.getTableNumber(), OrderStatus.POR_ATENDER).size() == 0) {
             return orderDao.save(order);
         } else {
@@ -54,46 +65,49 @@ public class OrderServiceImpl implements IOrderService {
         return orderDao.findById(id).orElse(null);
     }
 
+    /*@Override
+    public Order findByIdAndStatus(Long id, OrderStatus status) {
+        return orderDao.findByIdAndStatus(id, status);
+    }*/
+
+    @Override
+    public boolean existsById(Long id) {
+        return orderDao.existsById(id);
+    }
+
     @Override
     public void delete(Long id) {
         orderDao.deleteById(id);
     }
 
     @Override
-    public Order finish(Long id) {
+    public Order changeState(Long id, OrderStatus status) {
         Order order = orderDao.findById(id).orElse(null);
         if(order != null) {
-            order.setTotalPrice(order.calculateTotalPrice());
-            order.setStatus(OrderStatus.ATENDIDO);
+            order.setStatus(status);
         }
         return orderDao.save(order);
     }
 
     @Override
     public OrderDetail save(OrderDetail orderDetail) {
-        Product product = productDao.findById(orderDetail.getProduct().getIdProduct()).orElse(null);
         OrderDetail od = orderDetailDao.findByOrderAndProduct(
                 orderDetail.getOrder().getIdOrder()
                 ,orderDetail.getProduct().getIdProduct());
-        logger.info("orderdetail: " + od);
-        product.reduceStock(orderDetail.getQuantity());
-        orderDetail.setProduct(product);
-
         if(od != null) {
-            orderDetail.setIdOrderDetail(od.getIdOrderDetail());
-            orderDetail.increaseQuantity(od.getQuantity());
+            od.increaseQuantity(orderDetail.getQuantity());
+            return orderDetailDao.save(od);
         }
+        orderDetail.setProduct(productDao.findById(orderDetail.getProduct().getIdProduct()).orElse(null));
         return orderDetailDao.save(orderDetail);
-
     }
 
     @Override
     public boolean deleteOrderDetailById(Long id) {
         boolean isDeleted = orderDetailDao.existsById(id);
-        OrderDetail detail = orderDetailDao.findById(id).orElse(null);
-        detail.getProduct().increaseStock(detail.getQuantity());
         orderDetailDao.deleteById(id);
-
         return isDeleted;
     }
+
+
 }

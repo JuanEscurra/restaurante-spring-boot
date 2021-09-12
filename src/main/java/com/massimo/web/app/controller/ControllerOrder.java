@@ -2,6 +2,8 @@ package com.massimo.web.app.controller;
 
 import javax.validation.Valid;
 
+import com.massimo.web.app.config.Message;
+import com.massimo.web.app.config.TypeMessage;
 import com.massimo.web.app.domain.entity.Order;
 import com.massimo.web.app.domain.entity.OrderDetail;
 import com.massimo.web.app.domain.entity.OrderStatus;
@@ -71,13 +73,15 @@ public class ControllerOrder {
         SessionStatus status,
         RedirectAttributes flash) {
 
-        order.setStatus(OrderStatus.POR_ATENDER);
         if(result.hasErrors() | orderService.save(order) == null) {
-            flash.addFlashAttribute("error", "Se ha producido un error al reservar la mesa, probablemente ya esté ocupada");
-            logger.info("Se ha producido un error al reservar la mesa, probablemente ya esté ocupada");
+            flash.addFlashAttribute("message",
+                    new Message("Hubo un error al registrar el pedido, probablemente la mesa ya está ocupada", TypeMessage.ERROR));
             return "redirect:/order/";
 		}
 		status.setComplete();
+        flash.addFlashAttribute("message",
+                new Message("Se ha reservado la mesa con exitosamente.", TypeMessage.SUCCESSFUL));
+
         return "redirect:/order/";
     }
 
@@ -104,14 +108,33 @@ public class ControllerOrder {
 
     
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable Long id, Model model) {
-        orderService.delete(id);
+    public String delete(@PathVariable Long id, RedirectAttributes flash) {
+        try {
+            orderService.delete(id);
+            flash.addFlashAttribute("message",
+                    new Message("Se elimino exitosamente la comanda", TypeMessage.SUCCESSFUL));
+        } catch (Exception e) {
+            flash.addFlashAttribute("message",
+                    new Message("Hubo un error al eliminar al eliminar la comanda, es probable que la comanda no exista",
+                            TypeMessage.ERROR));
+        }
+
         return "redirect:/order/";
     }
 
     @GetMapping("/finish/{id}")
-    public String finish(@PathVariable Long id) {
-        orderService.finish(id);
+    public String finish(@PathVariable Long id, RedirectAttributes flash) {
+        Order order = orderService.findOne(id);
+        Message message = new Message();
+        if(order.getDetails().size() > 0) {
+            message.setType(TypeMessage.SUCCESSFUL);
+            message.setValue("Se ha finalizado el pedido exitosamente.");
+            orderService.changeState(id,OrderStatus.ATENDIDO);
+        } else {
+            message.setType(TypeMessage.ERROR);
+            message.setValue("No se pudo finalizar el pedido, debido a que debe tener al menos un producto");
+        }
+        flash.addFlashAttribute(message);
         return "redirect:/order/";
     }
 }

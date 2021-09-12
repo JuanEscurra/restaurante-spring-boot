@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/head :: head">
+</head>
+<body>
+    <div class="container">
+
+        <header th:replace="layout/header :: header"></header>
+
+        <nav th:replace="layout/navbar :: nav"></nav>
+
+        <main class="main">
+            <div
+                    class="msg"
+                    th:classappend="'msg--' + ${message.type.name}"
+                    th:if="${message != null}">
+                <span th:text="${message.value}"></span>
+                <div class="msg__close"><i class="fas fa-2x fa-times-circle"></i></div>
+            </div>
+            <div class="card">
+                <h3 class="section-title">Generar reportes</h3>
+                <div class="flex flex--center">
+                    <form th:action="@{/report/search}" class="flex">
+                        <input
+                                type="number"
+                                name="id"
+                                placeholder="Ingrese el numero de ticket"
+                                class="form__input md" required/>
+                        <button type="submit" class="btn btn--cancel">Buscar</button>
+                    </form>
+                        <form th:action="@{/report/date}" class="flex">
+                        <input
+                                th:value="${#dates.format(lowerDate, 'yyyy-MM-dd')}"
+                                type="date"
+                                name="lowerDate"
+                                placeholder="Ingrese fecha inferior"
+                                required
+                                class="form__input md"/>
+                        <input
+                                th:value="${#dates.format(upperDate, 'yyyy-MM-dd')}"
+                                type="date"
+                                name="upperDate"
+                                placeholder="Ingrese fecha superior"
+                                class="form__input md"/>
+                        <button type="submit" class="btn btn--cancel">Buscar</button>
+                    </form>
+                </div>
+                <table th:replace="order/pedidos :: table-orders"></table>
+            </div>
+        </main>
+
+        <footer th:replace="layout/footer :: footer"></footer>
+    </div>
+
+
+    <th:block th:replace="layout/scripts :: scripts"></th:block>
+</body>
+</html>

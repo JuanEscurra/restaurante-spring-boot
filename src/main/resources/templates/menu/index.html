@@ -12,23 +12,16 @@
 		<nav th:replace="layout/navbar :: nav"></nav>
 		
 		<main class="main">
-			<div>
-
+			<div
+				class="msg"
+				th:classappend="'msg--' + ${message.type.name}"
+				th:if="${message != null}">
+				<span th:text="${message.value}"></span>
+				<div class="msg__close"><i class="fas fa-2x fa-times-circle"></i></div>
 			</div>
 			<div class="card">
 				<h3 class="section-title">Carta de hoy</h3>
 				<div class="flex">
-					<form th:action="@{/menu/search}" id="searchProduct" class="flex">
-						<input
-								type="text"
-								name="name"
-								placeholder="Ingrese el nombre"
-								id="nameProduct"
-								class="form__input"/>
-						<button
-								type="submit"
-								class="btn btn--cancel">Buscar</button>
-					</form>
 					<div>
 						<a th:href="@{/menu/reset}" class="btn btn--cancel">
 							Reiniciar carta
@@ -118,8 +111,18 @@
 							</div>
 						</div>
 					</div>
+					<form th:action="@{/menu/search}" id="searchProduct" class="flex">
+						<input
+								type="text"
+								name="name"
+								placeholder="Ingrese el nombre"
+								id="nameProduct"
+								class="form__input"/>
+						<button
+								type="submit"
+								class="btn btn--cancel">Buscar</button>
+					</form>
 				</div>
-
 				<div class="content">
 					<div>
 						<h4>Carta</h4>
@@ -139,10 +142,10 @@
 							</thead>
 							<tbody class="table__body">
 							<tr th:each="product: ${productsActive}">
-								<td th:text="${product.name}"></td>
-								<td th:text="${product.price}"></td>
-								<td th:text="${product.stock}"></td>
-								<td th:text="${product.type}"></td>
+								<td data-label="Nombre" th:text="${product.name}"></td>
+								<td data-label="Precio" th:text="${product.price}"></td>
+								<td data-label="Stock" th:text="${product.stock}"></td>
+								<td data-label="Tipo" th:text="${product.type}"></td>
 							</tr>
 							</tbody>
 						</table>
@@ -164,21 +167,21 @@
 								<th>Acciones</th>
 							</tr>
 							</thead>
-							<tbody class="table__body">
-							<tr th:each="product: ${products}" th:id="'row-' + ${product.idProduct}">
-								<td th:text="${product.name}"></td>
-								<td th:text="${product.price}"></td>
-								<td th:text="${product.type}"></td>
-								<td>
-									<a th:href="@{/menu/form/} + ${product.idProduct}" class="btn btn--update">
-										Editar
-									</a>
-									<a th:href="@{/menu/delete/} + ${product.idProduct}"
-									   th:data-id="${product.idProduct}" class="btn btn--delete delete-products">
-										Eliminar
-									</a>
-								</td>
-							</tr>
+							<tbody class="table__body" id="table-body-products">
+								<tr th:each="product: ${products}" th:id="'row-' + ${product.idProduct}">
+									<td data-label="Nombre" th:text="${product.name}"></td>
+									<td data-label="Precio" th:text="${product.price}"></td>
+									<td data-label="Tipo" th:text="${product.type}"></td>
+									<td data-label="Acciones">
+										<a th:href="@{/menu/form/} + ${product.idProduct}" class="btn btn--update">
+											Editar
+										</a>
+										<a th:href="@{/menu/delete/} + ${product.idProduct}"
+										   th:data-id="${product.idProduct}" class="btn btn--delete delete-products">
+											Eliminar
+										</a>
+									</td>
+								</tr>
 							</tbody>
 						</table>
 					</div>

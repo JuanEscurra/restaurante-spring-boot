@@ -10,33 +10,35 @@
 		<nav th:replace="layout/navbar :: nav"></nav>
 		
 		<main class="main">
-			<h3 class="section-title">Registrar producto</h3>
-			<form th:action="@{/menu/register}" method="post" th:object="${product}" class="form">
-				<input type="hidden" th:field="*{idProduct}"/>
-				<input type="hidden" th:field="*{state}" th:value="1"/>
-				<div class="form__field">
-					<label for="name">Nombre</label>
-					<input type="text" th:field="*{name}" class="form__input" th:errorclass="error"/>
-					<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="form__error"></div>
-				</div>
-				<div class="form__field">
-					<label for="price">Precio</label>
-					<input type="number" id="price" th:field="*{price}" class="form__input" th:errorclass="error" />
-					<div th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="form__error"></div>
-				</div>
-				<div class="form__field">
-					<label for="type">Tipo</label>
-					<select id="type" th:field="*{type}" class="form__input" th:errorclass="error">
-						<option value="entrada">Entrada</option>
-						<option value="segundo">Segundo</option>
-						<option value="bebida">Bebida</option>
-					</select>
-				</div>
-				<div class="btn__double">
-					<a href="/user/" class="btn btn--cancel">Cancelar</a>
-					<button type="submit" class="btn btn--add">Registrar</button>
-				</div>
-			</form>
+			<div class="card">
+				<h3 class="section-title">Registrar producto</h3>
+				<form th:action="@{/menu/register}" method="post" th:object="${product}" class="form">
+					<input type="hidden" th:field="*{idProduct}"/>
+					<input type="hidden" th:field="*{state}" th:value="1"/>
+					<div class="form__field">
+						<label for="name">Nombre</label>
+						<input type="text" th:field="*{name}" class="form__input" th:errorclass="error"/>
+						<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="form__error"></div>
+					</div>
+					<div class="form__field">
+						<label for="price">Precio</label>
+						<input type="number" step=".01" id="price" th:field="*{price}" class="form__input" th:errorclass="error" />
+						<div th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="form__error"></div>
+					</div>
+					<div class="form__field">
+						<label for="type">Tipo</label>
+						<select id="type" th:field="*{type}" class="form__input" th:errorclass="error">
+							<option value="entrada">Entrada</option>
+							<option value="segundo">Segundo</option>
+							<option value="bebida">Bebida</option>
+						</select>
+					</div>
+					<div class="btn__double">
+						<a href="/menu/" class="btn btn--cancel">Cancelar</a>
+						<button type="submit" class="btn btn--add">Registrar</button>
+					</div>
+				</form>
+			</div>
 		</main>
 		
 		<footer th:replace="layout/footer :: footer"></footer>
